@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pregunta importante</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #5865F2, #7289da);
+      overflow: hidden;
+    }
+
+    .card {
+      width: min(90%, 500px);
+      padding: 45px 30px;
+      text-align: center;
+      background: white;
+      border-radius: 25px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    h1 {
+      color: #222;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #666;
+      font-size: 1.1rem;
+      margin-bottom: 35px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      min-height: 55px;
+    }
+
+    button {
+      border: none;
+      padding: 15px 30px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    #yes {
+      background: #5865F2;
+      color: white;
+    }
+
+    #yes:hover {
+      transform: scale(1.08);
+    }
+
+    #no {
+      background: #ed4245;
+      color: white;
+      position: fixed;
+      transition: left 0.15s ease, top 0.15s ease;
+    }
+
+    #result {
+      display: none;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #5865F2;
+      margin-top: 25px;
+    }
+
+    .emoji {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <div class="emoji">🎮</div>
+
+    <h1>Octavio, ¿te metés a Discord?</h1>
+
+    <p>Hay una decisión muy importante que tomar...</p>
+
+    <div class="buttons">
+      <button id="yes">Sí 😎</button>
+      <button id="no">No ❌</button>
+    </div>
+
+    <div id="result">
+      ¡Sabía que ibas a aceptar! 😂🎉
+    </div>
+  </div>
+
+  <script>
+    const noButton = document.getElementById("no");
+    const yesButton = document.getElementById("yes");
+    const result = document.getElementById("result");
+
+    function moveNoButton() {
+      const padding = 20;
+
+      const maxX = window.innerWidth - noButton.offsetWidth - padding;
+      const maxY = window.innerHeight - noButton.offsetHeight - padding;
+
+      const x = Math.max(padding, Math.random() * maxX);
+      const y = Math.max(padding, Math.random() * maxY);
+
+      noButton.style.left = x + "px";
+      noButton.style.top = y + "px";
+    }
+
+    // PC: se escapa cuando intentás pasarle el mouse.
+    noButton.addEventListener("mouseenter", moveNoButton);
+
+    // Celular: se escapa cuando intentás tocarlo.
+    noButton.addEventListener("touchstart", function(event) {
+      event.preventDefault();
+      moveNoButton();
+    });
+
+    // También por click, por si logra atraparlo.
+    noButton.addEventListener("click", function(event) {
+      event.preventDefault();
+      moveNoButton();
+    });
+
+    yesButton.addEventListener("click", function() {
+      result.style.display = "block";
+      noButton.style.display = "none";
+      yesButton.style.display = "none";
+    });
+
+    // Primera posición del botón.
+    window.addEventListener("load", function() {
+      const rect = noButton.getBoundingClientRect();
+      noButton.style.left = rect.left + "px";
+      noButton.style.top = rect.top + "px";
+    });
+  </script>
+
+</body>
+</html>
